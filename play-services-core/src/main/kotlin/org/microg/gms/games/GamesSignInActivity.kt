@@ -78,7 +78,12 @@ class GamesSignInActivity : AppCompatActivity() {
                         ?.getParcelable<GoogleSignInAccount>("googleSignInAccount")?.account
                 if (account != null) {
                     lifecycleScope.launchWhenStarted {
-                        signIn(account)
+                        try {
+                            signIn(account)
+                        } catch (e: Exception) {
+                            Log.w(TAG, "signIn failed", e)
+                            finish()
+                        }
                     }
                     return
                 }
